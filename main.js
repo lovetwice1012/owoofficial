@@ -34,13 +34,6 @@ client.channels.get("773035867894972416").send({ embed });
 
 
 */
-const http = require("http");
-http
-  .createServer(function(request, response) {
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end("Discord bot is active now \n");
-  })
-  .listen(3000);
 require("date-utils");
 var startuplog = "";
 startuplog = "起動ログ\n```モジュールのロード:";

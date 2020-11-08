@@ -5,12 +5,13 @@
   "main": "main.js",
   "dependencies": {
     "date-utils": "^1.2.21",
-    "discord.js": "latest",
-    "mysql": "^2.18.1"
+    "discord.js": "^11.6.4",
+    "mysql": "^2.18.1",
+    "node-cron": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node main.js",
+    "start": "bash ./start.sh",
     "test": "node main.js"
   }
 }
