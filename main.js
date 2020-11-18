@@ -166,7 +166,7 @@ client.on("ready", message => {
     }
 
     if (message.content.startsWith(";;")) {
-      var maintenance = false;
+      var maintenance = true;
       if (maintenance && message.author.id != 661793849001246721) {
         var reply = await message.reply(
           "メンテナンス中です。メンテ終了までおまちください。"
