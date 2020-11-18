@@ -164,6 +164,7 @@ client.on("ready", message => {
 
         message.react("❌");
       }
+
     }
     if (message.content.startsWith(";;")) {
       var maintenance = false;
