@@ -145,6 +145,7 @@ client.on("ready", message => {
       }
     );
   });
+
   client.on("message", async message => {
     var expmagni = 1;
     if (
