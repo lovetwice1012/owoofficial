@@ -59,8 +59,8 @@ client.on("ready", message => {
   client.channels.get("775940402284331008").send("bot is ready!");
   const connection = mysql.createConnection({
     host: "localhost",
-    user: "oneworld",
-    password: "oneworld",
+    user: "root",
+    password: "",
     database: "oneworld"
   });
   connection.connect(err => {
@@ -164,7 +164,6 @@ client.on("ready", message => {
         message.react("❌");
       }
     }
-
     if (message.content.startsWith(";;")) {
       var maintenance = true;
       if (maintenance && message.author.id != 661793849001246721) {
@@ -201,71 +200,76 @@ client.on("ready", message => {
             return;
           } else {
             try {
-              connection.query(
-                "SELECT * FROM user WHERE id = '" + message.author.id + "'",
-                async (error, results) => {
-                  client.channels
-                    .get("775940402284331008")
-                    .send(results.length);
-                  if (error) {
+              if (message.content != ";;register") {
+                connection.query(
+                  "SELECT * FROM user WHERE id = '" + message.author.id + "'",
+                  async (error, results) => {
                     client.channels
-                      .get("772602458983366657")
-                      .send(
-                        "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
-                          error +
-                          "```"
+                      .get("775940402284331008")
+                      .send(results.length);
+                    if (error) {
+                      client.channels
+                        .get("772602458983366657")
+                        .send(
+                          "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                            error +
+                            "```"
+                        );
+                      return;
+                    }
+if(results[0]===undefined){
+  message.reply("最初に;;register'で")
+}
+                    if (results[0]["self"] && results[0]["trycount"] < 5) {
+                      connection.query(
+                        "UPDATE user SET trycount = " +
+                          (parseInt(results[0]["trycount"]) + 1) +
+                          " WHERE id = '" +
+                          message.author.id +
+                          "';",
+                        (error, results) => {
+                          if (error) {
+                            client.channels
+                              .get("772602458983366657")
+                              .send(
+                                "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                                  error +
+                                  "```"
+                              );
+                            return;
+                          }
+                        }
                       );
-                    return;
-                  }
-                  if (results[0]["self"] && results[0]["trycount"] < 5) {
-                    connection.query(
-                      "UPDATE user SET trycount = " +
-                        (parseInt(results[0]["trycount"]) + 1) +
-                        " WHERE id = '" +
-                        message.author.id +
-                        "';",
-                      (error, results) => {
-                        if (error) {
-                          client.channels
-                            .get("772602458983366657")
-                            .send(
-                              "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
-                                error +
-                                "```"
-                            );
-                          return;
-                        }
-                      }
-                    );
-                    const embed = {
-                      title: "重要なお知らせがあります",
-                      description: "今すぐあなたのDMを確認してください。",
-                      color: 11020333
-                    };
-                    message.channel.send({ embed });
-                  }
+                      const embed = {
+                        title: "重要なお知らせがあります",
+                        description: "今すぐあなたのDMを確認してください。",
+                        color: 11020333
+                      };
+                      message.channel.send({ embed });
+                    }
 
-                  if (results[0]["self"] && results[0]["trycount"] == 5) {
-                    connection.query(
-                      "UPDATE channel SET self = 1 WHERE id = '" +
-                        message.channel.id +
-                        "';",
-                      (error, results) => {
-                        if (error) {
-                          client.channels
-                            .get("772602458983366657")
-                            .send(
-                              "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
-                                error +
-                                "```"
-                            );
-                          return;
+                    if (results[0]["self"] && results[0]["trycount"] == 5) {
+                      connection.query(
+                        "UPDATE channel SET self = 1 WHERE id = '" +
+                          message.channel.id +
+                          "';",
+                        (error, results) => {
+                          if (error) {
+                            client.channels
+                              .get("772602458983366657")
+                              .send(
+                                "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                                  error +
+                                  "```"
+                              );
+                            return;
+                          }
                         }
-                      }
-                    );
+                      );
+                    }
                   }
-                }
-              );
+                );
+              }
               function sleepByPromise(sec) {
                 return new Promise(resolve => setTimeout(resolve, sec * 1000));
               }
@@ -6446,7 +6450,7 @@ client.on("message", async message => {
           guilddata.iconURL
         )
         .setTimestamp(messagedata.createdAt);
-        console.log(messagedata.createdAt)
+      console.log(messagedata.createdAt);
       message.channel.send({ embed });
     }
   });
