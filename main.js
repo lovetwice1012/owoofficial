@@ -3251,16 +3251,17 @@ client.on("ready", message => {
                                                                         return;
                                                                       }
 
+                                                                      
                                                                       var zokuseitxt =
                                                                         results[0][
                                                                           "name"
                                                                         ];
                                                                       connection.query(
-                                                                        "SELECT id FROM user WHERE joinchannel = '" +
+                                                                        "SELECT id FROM user WHERE joinchannel = " +
                                                                           message
                                                                             .channel
-                                                                            .id +
-                                                                          "'",
+                                                                            .id
+                                                                          ,
                                                                         (
                                                                           error,
                                                                           results
@@ -3313,10 +3314,11 @@ client.on("ready", message => {
                                                                                 obj =>
                                                                                   obj.id
                                                                               )) {
+
                                                                                 connection.query(
-                                                                                  "SELECT * FROM user WHERE id = '" +
-                                                                                    id +
-                                                                                    "'",
+                                                                                  "SELECT * FROM user WHERE id = " +
+                                                                                    id
+                                                                                    ,
                                                                                   (
                                                                                     error,
                                                                                     results
@@ -3336,6 +3338,7 @@ client.on("ready", message => {
                                                                                       return;
                                                                                     }
 
+                                                                                    
                                                                                     var playerlv = Math.floor(
                                                                                       Math.sqrt(
                                                                                         results[0][
