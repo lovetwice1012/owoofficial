@@ -1,0 +1,102 @@
+clientwatt.on("message", async message => {
+  if (message.author.id == 772314123337465866) {
+    message.channel
+      .send("Received a OneWorld message.  It is being translated.")
+      .then(message => {
+        message.delete(3000);
+      });
+
+    function translate(text) {
+      console.log(text);
+      var texts = "";
+      var targetStr = "`";
+      var regExp = new RegExp(targetStr, "g");
+      text = text.replace(regExp, "");
+      const fetchs = require("node-fetch");
+      const paramss = new URLSearchParams();
+      paramss.append("text", text);
+      var url = encodeURI(
+        "https://script.google.com/macros/s/AKfycbwHotxsPT5VEz31ErMJvjjHrYhJmWEGBLbkUUX8iQ7tYCY4_ZWQ/exec"
+      );
+      return fetchs(url, {
+        method: "POST",
+        body: paramss
+      }).then(Response => {
+        return Response.text().then(Data => {
+          console.log(JSON.parse(Data).text);
+          return (texts = JSON.parse(Data).text);
+        });
+      });
+    }
+    if (
+      message.content !== undefined &&
+      message.content !== null &&
+      message.content !== ""
+    ) {
+      message.channel.send(await translate(message.content));
+      return;
+    }
+    if (message.embeds !== undefined && message.embeds !== null) {
+      const embed = new Discord.RichEmbed();
+      if (message.embeds[0] !== undefined) {
+        if (message.embeds[0]["title"] !== undefined) {
+          console.log(message.embeds[0]["title"]);
+          await embed.setTitle(await translate(message.embeds[0]["title"]));
+        }
+      }
+      if (message.embeds[0] !== undefined) {
+        embed.setColor(message.embeds[0].color);
+      }
+      if (message.embeds[0] !== undefined) {
+        if (message.embeds[0]["description"] !== undefined) {
+          await embed.setDescription(
+            await translate(message.embeds[0]["description"])
+          );
+        }
+      }
+      if (message.embeds[0] !== undefined) {
+        embed.setImage(message.embeds[0].image);
+      }
+      if (message.embeds[0] !== undefined) {
+        embed.setTimestamp(message.createdAt);
+      }
+      if (message.embeds[0] !== undefined) {
+        if (message.embeds[0]["fields"] !== undefined) {
+          await message.embeds[0].fields.forEach(
+            async ({ name, value, inline }) => {
+              await embed.addField(
+                await translate(name),
+                await translate(value),
+                true
+              );
+              console.log("added!");
+            }
+          );
+        }
+      }
+      function sleep(waitSec, callbackFunc) {
+        // 経過時間（秒）
+        var spanedSec = 0;
+
+        // 1秒間隔で無名関数を実行
+        var id = setInterval(function() {
+          spanedSec++;
+
+          // 経過時間 >= 待機時間の場合、待機終了。
+          if (spanedSec >= waitSec) {
+            // タイマー停止
+            clearInterval(id);
+
+            // 完了時、コールバック関数を実行
+            if (callbackFunc) callbackFunc();
+          }
+        }, 1000);
+      }
+
+      sleep(4, function() {
+        message.channel.send({ embed });
+        console.log("sended!");
+      });
+    }
+  }
+});
