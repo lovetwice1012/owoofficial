@@ -2212,6 +2212,8 @@ client.on("ready", message => {
                                           );
                                         return;
                                       }
+
+                                      console.log(results);
                                       for (const id of results.map(
                                         obj => obj.id
                                       )) {
@@ -2230,7 +2232,6 @@ client.on("ready", message => {
                                                 );
                                               return;
                                             }
-console.log(id)
                                             var playerlv = Math.floor(
                                               Math.sqrt(
                                                 results[0][
