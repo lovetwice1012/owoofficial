@@ -2229,6 +2229,9 @@ client.on("ready", message => {
                                             id +
                                             "'",
                                           (error, results) => {
+if(results[0]===undefined){
+  return;
+}
                                             var playerlv = Math.floor(
                                               Math.sqrt(
                                                 results[0][
@@ -2785,6 +2788,7 @@ client.on("ready", message => {
                   }
                 );
               }
+
               if (
                 message.content.startsWith(";;atk") ||
                 message.content.startsWith(";;attack")
@@ -3056,7 +3060,7 @@ client.on("ready", message => {
                                         }
                                       );
                                     }
-
+                                    
                                     connection.query(
                                       "SELECT * FROM channel WHERE id = '" +
                                         message.channel.id +
