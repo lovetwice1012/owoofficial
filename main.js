@@ -217,9 +217,12 @@ client.on("ready", message => {
                         );
                       return;
                     }
-if(results[0]===undefined){
-  message.reply("最初に;;register'で")
-}
+                    if (results[0] === undefined) {
+                      message.reply(
+                        "最初に';;register'でアカウントを作成しましょう！"
+                      );
+                      return;
+                    }
                     if (results[0]["self"] && results[0]["trycount"] < 5) {
                       connection.query(
                         "UPDATE user SET trycount = " +
@@ -2728,7 +2731,18 @@ if(results[0]===undefined){
                         message.guild.id +
                         "')",
                       (error, results) => {
-                        if (error) {
+                        
+                          if (error) {
+                            client.channels
+                              .get("772602458983366657")
+                              .send(
+                                "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                                  error +
+                                  "```"
+                              );
+                            return;
+                          
+
                           message.reply(
                             "```diff\n -このチャンネルはすでに登録されています！\n```"
                           );
@@ -2902,6 +2916,7 @@ if(results[0]===undefined){
                           message.reply(
                             '```diff\n -最初に";;prepare"でチャンネルを登録しましょう！```'
                           );
+                          return;
                         }
                       }
                     );
