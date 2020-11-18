@@ -89,7 +89,18 @@ client.on("ready", message => {
       for (const id of results.map(obj => obj.id)) {
         connection.query(
           "UPDATE channel SET progress = 0 WHERE id = '" + id + "';",
-          (error, results) => {}
+          (error, results) => {
+            if (error) {
+              client.channels
+                .get("772602458983366657")
+                .send(
+                  "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                    error +
+                    "```"
+                );
+              return;
+            }
+          }
         );
       }
     });
@@ -164,7 +175,6 @@ client.on("ready", message => {
 
         message.react("❌");
       }
-
     }
     if (message.content.startsWith(";;")) {
       var maintenance = false;
@@ -1042,8 +1052,6 @@ client.on("ready", message => {
                         "```そのギルド名はすでに使用されています！```"
                       );
                     } else {
-
-                      
                       connection.query(
                         "SELECT * FROM user WHERE id = '" +
                           message.author.id +
@@ -3256,7 +3264,6 @@ client.on("ready", message => {
                                                                         return;
                                                                       }
 
-                                                                      
                                                                       var zokuseitxt =
                                                                         results[0][
                                                                           "name"
@@ -3265,8 +3272,7 @@ client.on("ready", message => {
                                                                         "SELECT id FROM user WHERE joinchannel = " +
                                                                           message
                                                                             .channel
-                                                                            .id
-                                                                          ,
+                                                                            .id,
                                                                         (
                                                                           error,
                                                                           results
@@ -3319,11 +3325,9 @@ client.on("ready", message => {
                                                                                 obj =>
                                                                                   obj.id
                                                                               )) {
-
                                                                                 connection.query(
                                                                                   "SELECT * FROM user WHERE id = " +
-                                                                                    id
-                                                                                    ,
+                                                                                    id,
                                                                                   (
                                                                                     error,
                                                                                     results
@@ -3343,7 +3347,6 @@ client.on("ready", message => {
                                                                                       return;
                                                                                     }
 
-                                                                                    
                                                                                     var playerlv = Math.floor(
                                                                                       Math.sqrt(
                                                                                         results[0][
