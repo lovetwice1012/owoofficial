@@ -216,9 +216,6 @@ client.on("ready", message => {
                 connection.query(
                   "SELECT * FROM user WHERE id = '" + message.author.id + "'",
                   async (error, results) => {
-                    client.channels
-                      .get("775940402284331008")
-                      .send(results.length);
                     if (error) {
                       client.channels
                         .get("772602458983366657")
