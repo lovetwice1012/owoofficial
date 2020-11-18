@@ -6434,7 +6434,7 @@ client.on("message", async message => {
     }
   }
   GetUrlInText(message.content).forEach(async url => {
-    if (url.match(/https\:\/\/discord.com\/channels\//)) {
+    if (url.match(/https\:\/\/discord.com\/channels\//)||url.match(/https\:\/\/discordapp.com\/channels\//)) {
       var str = url;
       var cut_str = "/";
       var index = str.indexOf(cut_str);
