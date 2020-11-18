@@ -778,6 +778,7 @@ client.on("ready", message => {
                 };
                 message.channel.send({ embed });
               }
+
               if (message.content == ";;st") {
                 connection.query(
                   "SELECT * FROM user WHERE id = '" + message.author.id + "'",
@@ -1040,6 +1041,8 @@ client.on("ready", message => {
                         "```そのギルド名はすでに使用されています！```"
                       );
                     } else {
+
+                      
                       connection.query(
                         "SELECT * FROM user WHERE id = '" +
                           message.author.id +
