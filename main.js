@@ -2187,9 +2187,6 @@ client.on("ready", message => {
                               nextenemyid +
                               "'",
                             (error, results) => {
-                              client.channels
-                                .get("775940402284331008")
-                                .send(results);
                               var zokusei = results[0]["attribute"];
                               var nexthp = results[0]["hp"] * nextlv;
                               var nextname = results[0]["name"];
@@ -2205,9 +2202,6 @@ client.on("ready", message => {
                                       message.channel.id +
                                       "'",
                                     (error, results) => {
-                                      client.channels
-                                        .get("775940402284331008")
-                                        .send(results);
                                       if (error) {
                                         client.channels
                                           .get("772602458983366657")
@@ -2218,9 +2212,6 @@ client.on("ready", message => {
                                           );
                                         return;
                                       }
-                                      client.channels
-                                        .get("775940402284331008")
-                                        .send(results.map(obj => obj.id));
                                       for (const id of results.map(
                                         obj => obj.id
                                       )) {
@@ -2229,9 +2220,17 @@ client.on("ready", message => {
                                             id +
                                             "'",
                                           (error, results) => {
-if(results[0]===undefined){
-  return;
-}
+                                            if (error) {
+                                              client.channels
+                                                .get("772602458983366657")
+                                                .send(
+                                                  "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                                                    error +
+                                                    "```"
+                                                );
+                                              return;
+                                            }
+console.log(id)
                                             var playerlv = Math.floor(
                                               Math.sqrt(
                                                 results[0][
@@ -2734,17 +2733,15 @@ if(results[0]===undefined){
                         message.guild.id +
                         "')",
                       (error, results) => {
-                        
-                          if (error) {
-                            client.channels
-                              .get("772602458983366657")
-                              .send(
-                                "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
-                                  error +
-                                  "```"
-                              );
-                            return;
-                          
+                        if (error) {
+                          client.channels
+                            .get("772602458983366657")
+                            .send(
+                              "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                                error +
+                                "```"
+                            );
+                          return;
 
                           message.reply(
                             "```diff\n -このチャンネルはすでに登録されています！\n```"
@@ -3060,7 +3057,7 @@ if(results[0]===undefined){
                                         }
                                       );
                                     }
-                                    
+
                                     connection.query(
                                       "SELECT * FROM channel WHERE id = '" +
                                         message.channel.id +
