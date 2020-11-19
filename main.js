@@ -1612,7 +1612,7 @@ client.on("ready", message => {
                     }
                     var i = 1;
                     for (const result of results) {
-                      var servername = client.guilds.get(
+                      var servername = client.guilds.cache.get(
                         result.guild.toString()
                       );
                       if (
@@ -1624,7 +1624,7 @@ client.on("ready", message => {
                       } else {
                         servername = servername.name;
                       }
-                      var channelname = client.channels.get(
+                      var channelname = client.channels.cache.get(
                         result.id.toString()
                       );
                       if (
@@ -6434,7 +6434,10 @@ client.on("message", async message => {
     }
   }
   GetUrlInText(message.content).forEach(async url => {
-    if (url.match(/https\:\/\/discord.com\/channels\//)||url.match(/https\:\/\/discordapp.com\/channels\//)) {
+    if (
+      url.match(/https\:\/\/discord.com\/channels\//) ||
+      url.match(/https\:\/\/discordapp.com\/channels\//)
+    ) {
       var str = url;
       var cut_str = "/";
       var index = str.indexOf(cut_str);
