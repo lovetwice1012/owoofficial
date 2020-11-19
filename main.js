@@ -1072,6 +1072,7 @@ client.on("ready", message => {
                   };
                   client.channels.get("773035867894972416").send({ embed });
                   var args = message.content.split(" ");
+if(args[])
                   connection.query(
                     "SELECT count(*) FROM guild WHERE name = '" + args[1] + "'",
                     (error, results) => {
