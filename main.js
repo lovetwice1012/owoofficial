@@ -1641,9 +1641,9 @@ client.on("ready", message => {
                         i +
                         "位: サーバー名「" +
                         servername +
-                        "」の　" +
+                        "」の　チャンネル名「" +
                         channelname +
-                        " (" +
+                        "」 (" +
                         result["lv"] +
                         ")\n";
                       i++;
