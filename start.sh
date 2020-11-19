@@ -5,6 +5,6 @@ echo "run mysql"
 echo "run apache2"
 .apache2/run-apache2.sh&
 echo "run bot"
-nodemon main.js &
+forever start main.js &
 
 wait
