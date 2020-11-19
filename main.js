@@ -1643,7 +1643,7 @@ client.on("ready", message => {
                         servername +
                         "の" +
                         channelname +
-                        "(" +
+                        " (" +
                         result["lv"] +
                         ")\n";
                       i++;
