@@ -1072,7 +1072,10 @@ client.on("ready", message => {
                   };
                   client.channels.get("773035867894972416").send({ embed });
                   var args = message.content.split(" ");
-if(args[])
+if(!args[1].match(/^[0-9a-zA-Z]*$/)){
+message.reply("ギルド名に英数字以外の文字は使用出来ません！")
+return;
+}
                   connection.query(
                     "SELECT count(*) FROM guild WHERE name = '" + args[1] + "'",
                     (error, results) => {
@@ -1194,6 +1197,12 @@ if(args[])
                   };
                   client.channels.get("773035867894972416").send({ embed });
                   var args = message.content.split(" ");
+if(!args[1].match(/^[0-9a-zA-Z]*$/)){
+message.reply("ギルド名に英数字以外の文字は使用出来ません！")
+return;
+}
+
+
                   connection.query(
                     "SELECT count(*) FROM guild WHERE name = '" + args[1] + "'",
                     (error, results) => {
@@ -1323,6 +1332,10 @@ if(args[])
                 }
                 if (message.content.startsWith(";;gdelete")) {
                   var args = message.content.split(" ");
+if(!args[1].match(/^[0-9a-zA-Z]*$/)){
+message.reply("ギルド名に英数字以外の文字は使用出来ません！")
+return;
+}
                   const embed = {
                     title: "コマンドが実行されました！",
                     description:
