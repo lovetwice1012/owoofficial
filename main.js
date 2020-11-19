@@ -1612,8 +1612,8 @@ client.on("ready", message => {
                     }
                     var i = 1;
                     for (const result of results) {
-                      var servername = client.guilds.cache.get(
-                        result.guild.toString()
+                      var servername = client.guilds.get(
+                        result["guild"]
                       );
                       if (
                         servername === null ||
@@ -1624,8 +1624,8 @@ client.on("ready", message => {
                       } else {
                         servername = servername.name;
                       }
-                      var channelname = client.channels.cache.get(
-                        result.id.toString()
+                      var channelname = client.channels.get(
+                        result["id"]
                       );
                       if (
                         channelname === null ||
@@ -1639,9 +1639,9 @@ client.on("ready", message => {
                       text =
                         text +
                         i +
-                        "位:" +
+                        "位: サーバー名「" +
                         servername +
-                        "の" +
+                        "」の　" +
                         channelname +
                         " (" +
                         result["lv"] +
