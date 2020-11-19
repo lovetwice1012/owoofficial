@@ -299,7 +299,7 @@ client.on("ready", message => {
                 await wait(5);
               }
               var a = Math.floor(Math.random() * 20);
-              if (a == 0) {
+              if(a < 0) {
                 const embed = {
                   title: "公式サーバーにはもう入りましたか？",
                   description:
@@ -775,12 +775,12 @@ client.on("ready", message => {
                     },
                     {
                       name: "**other**",
-                      value: "ping,dlist,donate"
+                      value: "ping,st,help"
                     },
                     {
                       name: "**invite**",
                       value:
-                        "[招待リンク](https://discord.com/api/oauth2/authorize?client_id=772314123337465866&permissions=1748364865&scope=bot)"
+                        "[招待リンク](https://discord.com/api/oauth2/authorize?client_id=772314123337465866&permissions=19456&scope=bot)"
                     }
                   ]
                 };
