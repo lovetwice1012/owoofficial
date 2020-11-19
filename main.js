@@ -57,53 +57,76 @@ client.on("ready", message => {
   var hrstart2 = process.hrtime();
   startuplog = startuplog + "DBへの接続:";
   client.channels.get("775940402284331008").send("bot is ready!");
-  const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "oneworld"
-  });
-  connection.connect(err => {
-    if (err) {
-      client.channels
-        .get("775940402284331008")
-        .send("error connecting: " + err.stack);
-      startuplog =
-        startuplog +
-        "失敗\n DBへの接続に失敗しました。起動を完了できません。```";
-      client.channels.get("772426804526317578").send(startuplog);
-      client.channels
-        .get("772602458983366657")
-        .send(
-          "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
-            err.stack +
-            "```"
-        );
-      return;
-    }
-    startuplog = startuplog + process.hrtime(hrstart2)[1] / 1000000 + "ms\n";
-    startuplog = startuplog + "総合起動時間:";
-    startuplog = startuplog + process.hrtime(hrstart)[1] / 1000000 + "ms\n";
-    startuplog = startuplog + "起動完了しました。```";
-    connection.query("SELECT * FROM channel", async (error, results) => {
-      for (const id of results.map(obj => obj.id)) {
-        connection.query(
-          "UPDATE channel SET progress = 0 WHERE id = '" + id + "';",
-          (error, results) => {
-            if (error) {
-              client.channels
-                .get("772602458983366657")
-                .send(
-                  "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
-                    error +
-                    "```"
-                );
-              return;
-            }
-          }
-        );
+  function sleep(waitSec, callbackFunc) {
+    // 経過時間（秒）
+    var spanedSec = 0;
+
+    // 1秒間隔で無名関数を実行
+    var id = setInterval(function() {
+      spanedSec++;
+
+      // 経過時間 >= 待機時間の場合、待機終了。
+      if (spanedSec >= waitSec) {
+        // タイマー停止
+        clearInterval(id);
+
+        // 完了時、コールバック関数を実行
+        if (callbackFunc) callbackFunc();
       }
+    }, 1000);
+  }
+
+  
+  sleep(7, function() {
+    const connection = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "oneworld"
     });
+    connection.connect(err => {
+      if (err) {
+        client.channels
+          .get("775940402284331008")
+          .send("error connecting: " + err.stack);
+        startuplog =
+          startuplog +
+          "失敗\n DBへの接続に失敗しました。起動を完了できません。```";
+        client.channels.get("772426804526317578").send(startuplog);
+        client.channels
+          .get("772602458983366657")
+          .send(
+            "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+              err.stack +
+              "```"
+          );
+        return;
+      }
+      startuplog = startuplog + process.hrtime(hrstart2)[1] / 1000000 + "ms\n";
+      startuplog = startuplog + "総合起動時間:";
+      startuplog = startuplog + process.hrtime(hrstart)[1] / 1000000 + "ms\n";
+      startuplog = startuplog + "起動完了しました。```";
+      connection.query("SELECT * FROM channel", async (error, results) => {
+        for (const id of results.map(obj => obj.id)) {
+          connection.query(
+            "UPDATE channel SET progress = 0 WHERE id = '" + id + "';",
+            (error, results) => {
+              if (error) {
+                client.channels
+                  .get("772602458983366657")
+                  .send(
+                    "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                      error +
+                      "```"
+                  );
+                return;
+              }
+            }
+          );
+        }
+      });
+    });
+
     client.channels.get("772426804526317578").send(startuplog);
     client.channels.get("775940402284331008").send("success");
     client.user.setPresence({
@@ -299,7 +322,7 @@ client.on("ready", message => {
                 await wait(5);
               }
               var a = Math.floor(Math.random() * 20);
-              if(a < 0) {
+              if (a < 0) {
                 const embed = {
                   title: "公式サーバーにはもう入りましたか？",
                   description:
@@ -1044,6 +1067,17 @@ client.on("ready", message => {
                 connection.query(
                   "SELECT count(*) FROM guild WHERE name = '" + args[1] + "'",
                   (error, results) => {
+                    if (error) {
+                      client.channels
+                        .get("772602458983366657")
+                        .send(
+                          "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                            error +
+                            "```"
+                        );
+                      return;
+                    }
+
                     if (results[0]["count(*)"] != 0) {
                       message.reply(
                         "```そのギルド名はすでに使用されています！```"
@@ -1054,6 +1088,17 @@ client.on("ready", message => {
                           message.author.id +
                           "'",
                         (error, results) => {
+                          if (error) {
+                            client.channels
+                              .get("772602458983366657")
+                              .send(
+                                "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                                  error +
+                                  "```"
+                              );
+                            return;
+                          }
+
                           if (results[0]["guild"] !== null) {
                             message.reply(
                               "```あなたはもうすでにギルドに加入しています。```"
@@ -1612,9 +1657,7 @@ client.on("ready", message => {
                     }
                     var i = 1;
                     for (const result of results) {
-                      var servername = client.guilds.get(
-                        result["guild"]
-                      );
+                      var servername = client.guilds.get(result["guild"]);
                       if (
                         servername === null ||
                         servername === undefined ||
@@ -1624,9 +1667,7 @@ client.on("ready", message => {
                       } else {
                         servername = servername.name;
                       }
-                      var channelname = client.channels.get(
-                        result["id"]
-                      );
+                      var channelname = client.channels.get(result["id"]);
                       if (
                         channelname === null ||
                         channelname === undefined ||
