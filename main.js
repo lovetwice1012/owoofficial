@@ -98,6 +98,8 @@ client.on("ready", message => {
             err.stack +
             "```"
         );
+  throw new Error('DBに接続できません！');
+            
       return;
     }
     startuplog = startuplog + process.hrtime(hrstart2)[1] / 1000000 + "ms\n";
