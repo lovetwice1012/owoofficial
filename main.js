@@ -782,6 +782,8 @@ client.on("ready", message => {
               }
               if (message.content === ";;sst") {
                 var os = require('os');
+                var memory = await os.totalmem();
+                var freemem = await os.freemem();
                 const embed = {
                   title: "現在のサーバーの状態です。",
                   color: 4682420,
@@ -817,11 +819,11 @@ client.on("ready", message => {
                     },
                     {
                       name: "**全メモリ量**",
-                      value: Math.floor(await os.totalmem() / 1073741824) + " MB"
+                      value: Math.floor(memory / 1048576) + " MB"
                     },
                     {
                       name: "**空きメモリ量**",
-                      value: Math.floor(await os.freemem()  / 1073741824) + " MB"
+                      value: Math.floor(freemem  / 1048576) + " MB"
                     }
                   ]
                 };
