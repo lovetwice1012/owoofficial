@@ -1382,7 +1382,7 @@ client.on("ready", message => {
               }
               if (message.content.startsWith(";;gdelete")) {
                 var args = message.content.split(" ");
-               if (!args[1]===undefined) {
+               if (args[1]===undefined) {
                   message.reply("ギルド名を指定してください！");
                   return;
                 }
