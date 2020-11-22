@@ -35,13 +35,13 @@ client.channels.get("773035867894972416").send({ embed });
 
 */
 require("date-utils");
-
+require('dotenv').config();
 var startuplog = "";
 startuplog = "起動ログ\n```モジュールのロード:";
 var hrstart = process.hrtime();
 const discord = require("discord.js");
 const client = new discord.Client();
-const token = "NzcyMzE0MTIzMzM3NDY1ODY2.X543kw.rohby6FpG-_qMRagPN01xjGGrWQ";
+const token = process.env.token;
 const mysql = require("mysql");
 startuplog = startuplog + process.hrtime(hrstart)[1] / 1000000 + "ms\n";
 var hrstart1 = process.hrtime();
