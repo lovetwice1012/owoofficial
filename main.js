@@ -1382,7 +1382,12 @@ client.on("ready", message => {
               }
               if (message.content.startsWith(";;gdelete")) {
                 var args = message.content.split(" ");
-                if (!args[1].match(/^[0-9a-zA-Z]*$/)) {
+               if (!args[1]===undefined) {
+                  message.reply("ギルド名を指定してください！");
+                  return;
+                }
+  
+               if (!args[1].match(/^[0-9a-zA-Z]*$/)) {
                   message.reply("ギルド名に英数字以外の文字は使用出来ません！");
                   return;
                 }
