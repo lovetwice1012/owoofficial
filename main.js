@@ -797,15 +797,15 @@ client.on("ready", message => {
                   fields: [
                     {
                       name: "**使用しているCPUの割合**",
-                      value: os.cpus()
+                      value: await os.cpus()
                     },
                     {
                       name: "**全メモリ量**",
-                      value: os.totalmem()
+                      value: await os.totalmem()
                     },
                     {
                       name: "**空きメモリ量**",
-                      value: os.freemem()
+                      value: await os.freemem()
                     }
                   ]
                 };
