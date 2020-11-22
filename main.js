@@ -41,6 +41,7 @@ startuplog = "起動ログ\n```モジュールのロード:";
 var hrstart = process.hrtime();
 const discord = require("discord.js");
 const client = new discord.Client();
+const token = "NzcyMzE0MTIzMzM3NDY1ODY2.X543kw.Epk4lNT3V8tVXx1p3KBumCWntLs";
 const mysql = require("mysql");
 startuplog = startuplog + process.hrtime(hrstart)[1] / 1000000 + "ms\n";
 var hrstart1 = process.hrtime();
@@ -6479,12 +6480,6 @@ client.on("guildCreate", guild => {
   };
   client.channels.get("773381954631892992").send({ embed });
 });
-if (process.env.DISCORD_BOT_TOKEN == undefined) {
-  client.channels
-    .get("775940402284331008")
-    .send("please set ENV: DISCORD_BOT_TOKEN");
-  process.exit(0);
-}
 client.on("message", async message => {
   function GetUrlInText(text) {
     const matches = text.match(
@@ -6546,4 +6541,4 @@ client.on("message", async message => {
     }
   });
 });
-client.login(process.env.DISCORD_BOT_TOKEN);
+client.login(token);
