@@ -780,6 +780,37 @@ client.on("ready", message => {
                     )
                   );
               }
+              if (message.content === ";;sst") {
+                var os = require('os');
+                const embed = {
+                  title: "現在のサーバーの状態です。",
+                  color: 4682420,
+                  footer: {
+                    icon_url:
+                      "https://media.discordapp.net/attachments/772953562702938143/773054733882753064/image0.png",
+                    text: "OneWorldOnline:serverstatus"
+                  },
+                  author: {
+                    name: message.author.username,
+                    icon_url: message.author.avatarURL
+                  },
+                  fields: [
+                    {
+                      name: "**使用しているCPUの割合**",
+                      value: os.cpus()
+                    },
+                    {
+                      name: "**全メモリ量**",
+                      value: os.totalmem()
+                    },
+                    {
+                      name: "**空きメモリ量**",
+                      value: os.freemem()
+                    }
+                  ]
+                };
+                message.channel.send({ embed });                                 
+              }
               if (message.content === ";;help") {
                 const embed = {
                   title: "コマンド一覧です。",
@@ -808,7 +839,7 @@ client.on("ready", message => {
                     },
                     {
                       name: "**other**",
-                      value: "ping,st,help"
+                      value: "ping,st,sst,help"
                     },
                     {
                       name: "**invite**",
