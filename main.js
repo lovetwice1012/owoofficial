@@ -796,8 +796,24 @@ client.on("ready", message => {
                   },
                   fields: [
                     {
-                      name: "**使用しているCPUの割合**",
-                      value: await os.cpus()
+                      name: "**プラットフォーム**",
+                      value: await os.platform()
+                    },
+                    {
+                      name: "**アーキテクチャ**",
+                      value: await os.arch()
+                    },
+                    {
+                      name: "**使用しているCPUのモデル**",
+                      value: await os.cpus()[0].model
+                    },
+                    {
+                      name: "**使用しているCPUの周波数**",
+                      value: await os.cpus()[0].speed
+                    },
+                    {
+                      name: "**使用しているCPUのコア数**",
+                      value: await os.cpus().length
                     },
                     {
                       name: "**全メモリ量**",
