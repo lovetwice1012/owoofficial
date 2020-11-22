@@ -817,11 +817,11 @@ client.on("ready", message => {
                     },
                     {
                       name: "**全メモリ量**",
-                      value: await os.totalmem()
+                      value: Math.floor(await os.totalmem() / 1073741824) + " MB"
                     },
                     {
                       name: "**空きメモリ量**",
-                      value: await os.freemem()
+                      value: Math.floor(await os.freemem()  / 1073741824) + " MB"
                     }
                   ]
                 };
