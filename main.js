@@ -636,25 +636,33 @@ client.on("ready", message => {
 									message.reply("追加するクレジット数は数字でお願いします…");
 									return;
 								}
-								connection.query(
-									"UPDATE user SET money = '" +
-									args[2] +
-									"' WHERE id = '" +
-									user.id +
-									"';",
-									(error, results) => {
-										if (error) {
-											client.channels
-												.get("772602458983366657")
-												.send(
-													"<@661793849001246721>データベースへの接続に失敗しました！\n```" +
-													error +
-													"```"
-												);
-											return;
-										}
-
-										message.reply("課金額の付与に成功しました！！");
+	                                                        connection.query(
+									"SELECT * FROM user WHERE id = '" + 
+                                                                        user.id + 
+                                                                        "';",
+									async (error, results) => {
+							
+										connection.query(
+											"UPDATE user SET money = '" +
+											(parseInt(results[0]["money"])+parseInt(args[2])) +
+											"' WHERE id = '" +
+											user.id +
+											"';",
+											(error, results) => {
+												if (error) {
+													client.channels
+														.get("772602458983366657")
+														.send(
+															"<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+															error +
+															"```"
+														);
+														return;
+												}
+		
+												message.reply("課金額の付与に成功しました！！");
+											}
+										);
 									}
 								);
 							}
@@ -767,7 +775,7 @@ client.on("ready", message => {
 									.then(pingcheck =>
 										pingcheck.edit(
 											`botの速度|${pingcheck.createdTimestamp -
-                        message.createdTimestamp} ms`
+                        								message.createdTimestamp} ms`
 										)
 									);
 							}
