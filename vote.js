@@ -4,8 +4,8 @@ const mysql = require("mysql");
 client.on("ready", async message => {
   const connection = mysql.createConnection({
     host: "localhost",
-    user: "oneworld",
-    password: "oneworld",
+    user: "root",
+    password: "",
     database: "oneworld"
   });
   connection.connect(err => {
