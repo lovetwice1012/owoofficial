@@ -29,7 +29,7 @@ const embed = {
 "icon_url": message.author.avatarURL
 }
 };
-client.channels.get("773035867894972416").send({ embed });
+//client.channels.get("773035867894972416").send({ embed });
 
 
 
@@ -972,7 +972,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								if (message.author.bot) {
 									message.reply("あれ…？ボット…？？見間違いかなぁ？");
 									return;
@@ -1100,7 +1100,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								var args = message.content.split(" ");
 								if (!args[1].match(/^[0-9a-zA-Z]*$/)) {
 									message.reply("ギルド名に英数字以外の文字は使用出来ません！");
@@ -1224,7 +1224,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								var args = message.content.split(" ");
 								if (!args[1].match(/^[0-9a-zA-Z]*$/)) {
 									message.reply("ギルド名に英数字以外の文字は使用出来ません！");
@@ -1319,7 +1319,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT count(*) FROM guild WHERE master = '" +
 									message.author.id +
@@ -1395,7 +1395,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT count(*) FROM guild WHERE master = '" +
 									message.author.id +
@@ -1499,7 +1499,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT * FROM user WHERE id = '" + message.author.id + "'",
 									(error, results) => {
@@ -1583,7 +1583,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT * FROM user WHERE id = '" + message.author.id + "'",
 									(error, results) => {
@@ -1690,7 +1690,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								var text = "";
 								connection.query(
 									"SELECT * FROM channel WHERE self = 0 ORDER BY lv DESC LIMIT 10",
@@ -1780,7 +1780,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT * FROM user WHERE id = '" + message.author.id + "'",
 									(error, results) => {
@@ -1945,7 +1945,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT * FROM user WHERE id = '" + message.author.id + "'",
 									(error, results) => {
@@ -2100,7 +2100,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT * FROM user WHERE id = '" + message.author.id + "'",
 									(error, results) => {
@@ -2249,7 +2249,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT * FROM user WHERE id = '" + message.author.id + "'",
 									(error, results) => {
@@ -2451,7 +2451,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								var args = message.content.split(" ");
 								if (args[1] == 0 || args[1] == 1 || args[1] == 2) {
 									connection.query(
@@ -2520,7 +2520,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"UPDATE user SET job0 = '100000000000000' WHERE id = '" +
 									message.author.id +
@@ -2556,7 +2556,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT * FROM user WHERE id = '" + message.author.id + "'",
 									(error, results) => {
@@ -2676,7 +2676,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"UPDATE channel SET progress = 0 WHERE id = '" +
 									message.channel.id +
@@ -2719,7 +2719,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"INSERT INTO user(id,haveweapon,item) VALUES (" +
 									message.author.id +
@@ -2786,7 +2786,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT count(*) FROM raidchannel WHERE id = '" +
 									message.channel.id +
@@ -2978,7 +2978,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT joinchannel FROM user WHERE id = '" +
 									message.author.id +
@@ -3931,7 +3931,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT joinchannel FROM user WHERE id = '" +
 									message.author.id +
@@ -4751,7 +4751,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT joinchannel FROM user WHERE id = '" +
 									message.author.id +
@@ -5576,7 +5576,7 @@ client.on("ready", message => {
 										icon_url: message.author.avatarURL
 									}
 								};
-								client.channels.get("773035867894972416").send({ embed });
+								//client.channels.get("773035867894972416").send({ embed });
 								connection.query(
 									"SELECT joinchannel FROM user WHERE id = '" +
 									message.author.id +
