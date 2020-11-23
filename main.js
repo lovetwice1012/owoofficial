@@ -641,7 +641,17 @@ client.on("ready", message => {
                                                                         user.id + 
                                                                         "';",
 									async (error, results) => {
-							
+										if (error) {
+											client.channels
+												.get("772602458983366657")
+												.send(
+													"<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+													error +
+													"```"
+												);
+											return;
+										}
+		
 										connection.query(
 											"UPDATE user SET money = '" +
 											(parseInt(results[0]["money"])+parseInt(args[2])) +
