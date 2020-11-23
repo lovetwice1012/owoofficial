@@ -1,5 +1,12 @@
 <?php
 ini_set("display_errors","On");
 $json = json_decode(file_get_contents('php://input'));
-exec("node vote.js ".$json->user." > ./vote.txt &");
-
+if(isset($json)){
+    if($json->type=="test"){
+        
+    }else{
+        exec("node vote.js ".$json->user." > ./vote.txt &");
+    }
+}else{
+ echo "error"; 
+}
