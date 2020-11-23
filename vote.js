@@ -19,43 +19,29 @@ client.on("ready", async message => {
         );
       return;
     }
-    client.channels
-      .get("772426804526317578")
-      .send("voteの特典用にdbへの接続を確立させました！");
   });
   var id = process.argv[2];
   var user = await client.fetchUser(id);
-  if (user === undefined) {
-    console.log("user is undefined");
-  }
-  if (user === null) {
-    console.log("user is null");
-  }
   if (user === undefined || user === null) {
-    console.log("user " + id + "is deleted or i cant find");
     return;
   }
   connection.query(
     "SELECT * FROM user WHERE id = '" + id + "'",
     async (error, results) => {
       if (results[0] === undefined || results[0] === null) {
-        console.log("user " + id + "have never create owo account.");
         return;
       }
-      console.log(results[0]["money"]);
-      var get = parseInt(results[0]["money"]) + 1;
-      console.log(get);
+      var get = parseInt(results[0]["money"]) + 5;
       connection.query(
         "UPDATE user SET money = " + get + " WHERE id = '" + id + "';",
         async (error, results) => {
-          console.error(error);
           await user.send(
-            "🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×1をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)"
+            "🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×5をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)\nあなたの今のクレジット残高:"+get
           );
           var owner = await client.fetchUser("661793849001246721");
           await owner.send(
             user.username +
-              "さんがOneWorldOnline公式鯖か関連鯖にvoteしてくれました…\n感謝の印に課金クレジットをプレゼントしました！\nきっと喜んでくれると思います。"
+              "さんがOneWorldOnline公式鯖か関連鯖にvoteしてくれました…\n感謝の印に課金クレジットをプレゼントしました！\nきっと喜んでくれると思います。\n"+user.username+"さんのクレジット残高:"+get
           );
           connection.end();
           client.destroy();
