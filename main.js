@@ -637,9 +637,7 @@ client.on("ready", message => {
 									return;
 								}
 	                                                        connection.query(
-									"SELECT * FROM user WHERE id = '" + 
-                                                                        user.id + 
-                                                                        "';",
+									"SELECT * FROM user WHERE id = '" + user.id + "';",
 									async (error, results) => {
 										if (error) {
 											client.channels
@@ -651,7 +649,7 @@ client.on("ready", message => {
 												);
 											return;
 										}
-										message.reply(results[0]["money"]);
+										message.reply(user.id);
 										connection.query(
 											"UPDATE user SET money = '" +
 											(parseInt(results[0]["money"])+parseInt(args[2])) +
