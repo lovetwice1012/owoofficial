@@ -651,7 +651,7 @@ client.on("ready", message => {
 												);
 											return;
 										}
-		
+										message.reply(results[0]["money"]);
 										connection.query(
 											"UPDATE user SET money = '" +
 											(parseInt(results[0]["money"])+parseInt(args[2])) +
