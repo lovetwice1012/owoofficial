@@ -1,3 +1,4 @@
+require('dotenv').config();
 const discord = require("discord.js");
 const client = new discord.Client();
 const mysql = require("mysql");
@@ -41,7 +42,7 @@ client.on("ready", async message => {
           var owner = await client.fetchUser("661793849001246721");
           await owner.send(
             user.username +
-              "さんがOneWorldOnline公式鯖か関連鯖にvoteしてくれました…\n感謝の印に課金クレジットをプレゼントしました！\nきっと喜んでくれると思います。\n"+user.username+"さんのクレジット残高:"+get
+              "さんがOneWorldOnline公式鯖か関連鯖にvoteしてくれました…\n"+user.username+"さんのクレジット残高:"+get
           );
           connection.end();
           client.destroy();
