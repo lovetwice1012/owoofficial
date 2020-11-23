@@ -103,10 +103,6 @@ client.on("ready", message => {
             
       return;
     }
-    startuplog = startuplog + process.hrtime(hrstart2)[1] / 1000000 + "ms\n";
-    startuplog = startuplog + "総合起動時間:";
-    startuplog = startuplog + process.hrtime(hrstart)[1] / 1000000 + "ms\n";
-    startuplog = startuplog + "起動完了しました。```";
     connection.query("SELECT * FROM channel", async (error, results) => {
       for (const id of results.map(obj => obj.id)) {
         connection.query(
@@ -127,9 +123,11 @@ client.on("ready", message => {
       }
     });
   });
-
+  startuplog = startuplog + process.hrtime(hrstart2)[1] / 1000000 + "ms\n";
+  startuplog = startuplog + "総合起動時間:";
+  startuplog = startuplog + process.hrtime(hrstart)[1] / 1000000 + "ms\n";
+  startuplog = startuplog + "起動完了しました。```";
   client.channels.get("772426804526317578").send(startuplog);
-  client.channels.get("775940402284331008").send("success");
   client.user.setPresence({
     status: "online",
     game: {
@@ -2854,6 +2852,27 @@ client.on("ready", message => {
                       );
                       return;
                     }
+            connection.query(
+                  "SELECT count(*) FROM channel WHERE id = '" +
+                    message.channel.id +
+                    "'",
+                  (error, results) => {
+                    if (error) {
+                      client.channels
+                        .get("772602458983366657")
+                        .send(
+                          "<@661793849001246721>データベースへの接続に失敗しました！\n```" +
+                            error +
+                            "```"
+                        );
+                      return;
+                    }
+                    if (results[0]["count(*)"] != 0) {
+                      message.reply(
+                        "```diff\n このチャンネルはもうすでに登録されています！```"
+                      );
+                      return;
+                    }
 
                     connection.query(
                       "INSERT INTO channel(id,guild) VALUES ('" +
@@ -2913,6 +2932,8 @@ client.on("ready", message => {
                     return;
                   }
                 );
+                }
+                );
               }
 
               if (
@@ -2922,9 +2943,6 @@ client.on("ready", message => {
                 connection.query(
                   "SELECT * FROM user WHERE id = '" + message.author.id + "'",
                   async (error, results) => {
-                    client.channels
-                      .get("775940402284331008")
-                      .send(results.length);
                     if (error) {
                       client.channels
                         .get("772602458983366657")
@@ -3233,9 +3251,6 @@ client.on("ready", message => {
                                                     message.channel.id +
                                                     "';",
                                                   (error, results) => {
-                                                    client.channels
-                                                      .get("775940402284331008")
-                                                      .send(results);
                                                     if (enemy != 0) {
                                                       message.channel.send(
                                                         "```\n" +
@@ -3421,16 +3436,6 @@ client.on("ready", message => {
                                                                               );
                                                                             return;
                                                                           }
-                                                                          client.channels
-                                                                            .get(
-                                                                              "775940402284331008"
-                                                                            )
-                                                                            .send(
-                                                                              results.map(
-                                                                                obj =>
-                                                                                  obj.id
-                                                                              )
-                                                                            );
                                                                           promise = new Promise(
                                                                             (
                                                                               resolve,
@@ -3909,9 +3914,6 @@ client.on("ready", message => {
                 connection.query(
                   "SELECT * FROM user WHERE id = '" + message.author.id + "'",
                   async (error, results) => {
-                    client.channels
-                      .get("775940402284331008")
-                      .send(results.length);
                     if (error) {
                       client.channels
                         .get("772602458983366657")
@@ -4001,7 +4003,6 @@ client.on("ready", message => {
                     message.author.id +
                     "'",
                   (error, results) => {
-                    client.channels.get("775940402284331008").send(results);
                     if (results[0] !== null && results[0] !== undefined) {
                       if (
                         results[0].joinchannel != message.channel.id &&
@@ -4093,9 +4094,6 @@ client.on("ready", message => {
                                     message.author.id +
                                     "';",
                                   (error, results) => {
-                                    client.channels
-                                      .get("775940402284331008")
-                                      .send(results);
                                     if (error) {
                                       client.channels
                                         .get("772602458983366657")
@@ -4113,9 +4111,6 @@ client.on("ready", message => {
                                     message.author.id +
                                     "'",
                                   (error, results) => {
-                                    client.channels
-                                      .get("775940402284331008")
-                                      .send(results);
                                     if (error) {
                                       client.channels
                                         .get("772602458983366657")
@@ -4181,9 +4176,6 @@ client.on("ready", message => {
                                         message.channel.id +
                                         "'",
                                       (error, results) => {
-                                        client.channels
-                                          .get("775940402284331008")
-                                          .send(results);
                                         var clv = results[0]["lv"] / 10;
                                         var enemyhp = results[0]["hp"];
                                         connection.query(
@@ -4211,9 +4203,6 @@ client.on("ready", message => {
                                                 message.author.id +
                                                 "';",
                                               (error, results) => {
-                                                client.channels
-                                                  .get("775940402284331008")
-                                                  .send(results);
                                                 if (enemyhp - damage < 1) {
                                                   var kill = true;
                                                   var enemy = 0;
@@ -4262,11 +4251,6 @@ client.on("ready", message => {
                                                       connection.query(
                                                         "SELECT * FROM enemy ORDER BY RAND() LIMIT 1",
                                                         (error, results) => {
-                                                          client.channels
-                                                            .get(
-                                                              "775940402284331008"
-                                                            )
-                                                            .send(results);
                                                           var nexturl =
                                                             results[0]["url"];
                                                           var zokusei =
@@ -4288,11 +4272,6 @@ client.on("ready", message => {
                                                               error,
                                                               results
                                                             ) => {
-                                                              client.channels
-                                                                .get(
-                                                                  "775940402284331008"
-                                                                )
-                                                                .send(results);
                                                               nexthp =
                                                                 nexthp *
                                                                 results[0][
@@ -4319,13 +4298,6 @@ client.on("ready", message => {
                                                                   error,
                                                                   results
                                                                 ) => {
-                                                                  client.channels
-                                                                    .get(
-                                                                      "775940402284331008"
-                                                                    )
-                                                                    .send(
-                                                                      results
-                                                                    );
                                                                   connection.query(
                                                                     "SELECT * FROM attribute WHERE id = '" +
                                                                       zokusei +
@@ -4362,17 +4334,6 @@ client.on("ready", message => {
                                                                               );
                                                                             return;
                                                                           }
-                                                                          client.channels
-                                                                            .get(
-                                                                              "775940402284331008"
-                                                                            )
-                                                                            .send(
-                                                                              results.map(
-                                                                                obj =>
-                                                                                  obj.id
-                                                                              )
-                                                                            );
-
                                                                           promise = new Promise(
                                                                             (
                                                                               resolve,
@@ -4791,9 +4752,6 @@ client.on("ready", message => {
                 connection.query(
                   "SELECT * FROM user WHERE id = '" + message.author.id + "'",
                   async (error, results) => {
-                    client.channels
-                      .get("775940402284331008")
-                      .send(results.length);
                     if (error) {
                       client.channels
                         .get("772602458983366657")
@@ -5101,9 +5059,6 @@ client.on("ready", message => {
                                                     message.channel.id +
                                                     "';",
                                                   (error, results) => {
-                                                    client.channels
-                                                      .get("775940402284331008")
-                                                      .send(results);
                                                     if (enemy != 0) {
                                                       message.channel.send(
                                                         "```\n" +
@@ -5640,9 +5595,6 @@ client.on("ready", message => {
                 connection.query(
                   "SELECT * FROM user WHERE id = '" + message.author.id + "'",
                   async (error, results) => {
-                    client.channels
-                      .get("775940402284331008")
-                      .send(results.length);
                     if (error) {
                       client.channels
                         .get("772602458983366657")
@@ -5732,7 +5684,6 @@ client.on("ready", message => {
                     message.author.id +
                     "'",
                   (error, results) => {
-                    client.channels.get("775940402284331008").send(results);
                     if (results[0] !== null && results[0] !== undefined) {
                       if (
                         results[0].joinchannel != message.channel.id &&
@@ -5785,9 +5736,6 @@ client.on("ready", message => {
                               message.channel.id +
                               "';",
                             (error, results) => {
-                              client.channels
-                                .get("775940402284331008")
-                                .send(results);
                             }
                           );
                           connection.query(
@@ -5824,9 +5772,6 @@ client.on("ready", message => {
                                     message.author.id +
                                     "';",
                                   (error, results) => {
-                                    client.channels
-                                      .get("775940402284331008")
-                                      .send(results);
                                     if (error) {
                                       client.channels
                                         .get("772602458983366657")
@@ -5844,9 +5789,6 @@ client.on("ready", message => {
                                     message.author.id +
                                     "'",
                                   (error, results) => {
-                                    client.channels
-                                      .get("775940402284331008")
-                                      .send(results);
                                     if (error) {
                                       client.channels
                                         .get("772602458983366657")
@@ -5912,9 +5854,6 @@ client.on("ready", message => {
                                         message.channel.id +
                                         "'",
                                       (error, results) => {
-                                        client.channels
-                                          .get("775940402284331008")
-                                          .send(results);
                                         var clv = results[0]["lv"] / 10;
                                         var enemyhp = results[0]["hp"];
                                         connection.query(
@@ -5942,9 +5881,6 @@ client.on("ready", message => {
                                                 message.author.id +
                                                 "';",
                                               (error, results) => {
-                                                client.channels
-                                                  .get("775940402284331008")
-                                                  .send(results);
                                                 if (enemyhp - damage < 1) {
                                                   var kill = true;
                                                   var enemy = 0;
@@ -5993,11 +5929,6 @@ client.on("ready", message => {
                                                       connection.query(
                                                         "SELECT * FROM raidenemy ORDER BY RAND() LIMIT 1",
                                                         (error, results) => {
-                                                          client.channels
-                                                            .get(
-                                                              "775940402284331008"
-                                                            )
-                                                            .send(results);
                                                           var nexturl =
                                                             results[0]["url"];
                                                           var zokusei =
@@ -6019,11 +5950,6 @@ client.on("ready", message => {
                                                               error,
                                                               results
                                                             ) => {
-                                                              client.channels
-                                                                .get(
-                                                                  "775940402284331008"
-                                                                )
-                                                                .send(results);
                                                               nexthp =
                                                                 nexthp *
                                                                 results[0][
@@ -6050,13 +5976,6 @@ client.on("ready", message => {
                                                                   error,
                                                                   results
                                                                 ) => {
-                                                                  client.channels
-                                                                    .get(
-                                                                      "775940402284331008"
-                                                                    )
-                                                                    .send(
-                                                                      results
-                                                                    );
                                                                   connection.query(
                                                                     "SELECT * FROM attribute WHERE id = '" +
                                                                       zokusei +
