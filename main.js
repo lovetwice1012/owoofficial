@@ -311,6 +311,7 @@ client.on("ready", message => {
 							async function wait(sec) {
 								await sleepByPromise(sec);
 							}
+							/*
 							if (results[0] !== undefined) {
 								if (results[0]["fastpassport"] == 1) {
 									await wait(3);
@@ -320,6 +321,7 @@ client.on("ready", message => {
 							} else {
 								await wait(5);
 							}
+							*/
 							var a = Math.floor(Math.random() * 20);
 							if (a < 0) {
 								const embed = {
