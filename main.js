@@ -169,8 +169,13 @@ client.on("ready", async message => {
           return;
         }
         if (results.length == 0 && message.content != ";;register") {
+          const embed = {
+          "title": "You haven't created a OneWorld account yet!  Maybe you can't read Japanese?",
+          "description": "If you can't read Japanese, use [this translation bot](https://discord.com/api/oauth2/authorize?client_id=781628154678214678&permissions=83968&scope=bot) created by the OneWorld official!  Just install it and it will automatically translate the OneWorld Online message into English!",
+          "color": 1041866
+          };
+          message.channel.send({ embed });
           message.reply('```diff\n -最初に";;register"でアカウントを作成しましょう！```');
-          connection.query("UPDATE channel SET progress = 0 WHERE id = '" + message.channel.id + "';", (error, results) => {});
           return;
         } else {
           try {
