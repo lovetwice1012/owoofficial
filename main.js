@@ -6336,10 +6336,10 @@ client.on("ready",async message => {
 	});
 const DBL = require('dblapi.js');
 const dbl = new DBL(process.env.dbl, { webhookPort: 30400});
-dbl.webhook.on('ready', hook => {
+dbl.webhook.on('ready',async hook => {
   console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
 });
-dbl.webhook.on('vote', vote => {
+dbl.webhook.on('vote',async vote => {
   console.log(`User with ID ${vote.user} just voted!`);
   var id = vote.user;
   var user = await client.fetchUser(id);
