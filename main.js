@@ -46,7 +46,7 @@ const mysql = require("mysql");
 startuplog = startuplog + process.hrtime(hrstart)[1] / 1000000 + "ms\n";
 var hrstart1 = process.hrtime();
 startuplog = startuplog + "discordへの接続:";
-client.on("ready", message => {
+client.on("ready",async message => {
 	client.user.setPresence({
 		status: "idle",
 		game: {
