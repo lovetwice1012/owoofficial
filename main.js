@@ -2681,9 +2681,9 @@ client.on("ready", async message => {
       if (results[0] === undefined || results[0] === null) {
         return;
       }
-      var get = parseInt(results[0]["money"]) + 15;
+      var get = parseInt(results[0]["money"]) + 5;
       connection.query("UPDATE user SET money = " + get + " WHERE id = '" + id + "';", async(error, results) => {
-        await user.send("🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×15をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)\nあなたの今のクレジット残高:" + get);
+        await user.send("🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×5をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)\nあなたの今のクレジット残高:" + get);
         var owner = await client.fetchUser("661793849001246721");
         await owner.send(user.username + "さんがOneWorldOnlineにvoteしてくれました…!\n" + user.username + "さんのクレジット残高:" + get);
       });
