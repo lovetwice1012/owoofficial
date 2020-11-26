@@ -6334,6 +6334,43 @@ client.on("ready", message => {
 			);
 		}
 	});
+const DBL = require('dblapi.js');
+const dbl = new DBL(process.env.dbl, { webhookPort: 30400});
+dbl.webhook.on('ready', hook => {
+  console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
+});
+dbl.webhook.on('vote', vote => {
+  console.log(`User with ID ${vote.user} just voted!`);
+  var id = vote.user;
+  var user = await client.fetchUser(id);
+  if (user === undefined || user === null) {
+    return;
+  }
+  connection.query(
+    "SELECT * FROM user WHERE id = '" + id + "'",
+    async (error, results) => {
+      if (results[0] === undefined || results[0] === null) {
+        return;
+      }
+      var get = parseInt(results[0]["money"]) + 15;
+      connection.query(
+        "UPDATE user SET money = " + get + " WHERE id = '" + id + "';",
+        async (error, results) => {
+          await user.send(
+            "🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×15をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)\nあなたの今のクレジット残高:"+get
+          );
+          var owner = await client.fetchUser("661793849001246721");
+          await owner.send(
+            user.username +
+              "さんがOneWorldOnlineにvoteしてくれました…!\n"+user.username+"さんのクレジット残高:"+get
+          );
+         }
+      );
+    }
+  );
+
+});
+
 });
 client.on("guildCreate", guild => {
 	client.channels.get("775940402284331008").send(guild);
