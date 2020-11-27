@@ -2670,7 +2670,7 @@ client.on("ready", async message => {
   });
   const DBL = require('dblapi.js');
   const dbl = new DBL(process.env.dbl, {
-    webhookPort: 80
+    webhookPort: 3000
   });
   dbl.webhook.on('ready', async hook => {
     console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
