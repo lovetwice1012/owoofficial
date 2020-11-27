@@ -140,6 +140,11 @@ client.on("ready", async message => {
         connection.query("UPDATE user SET fastpassport = 0 WHERE id = '" + id + "';", (error, results) => {});
       }
     });
+    connection.query("SELECT * FROM user WHERE NOT vote = 0", async(error, results) => {
+      for (const id of results.map(obj => obj.id)) {
+        connection.query("UPDATE user SET vote = 0 WHERE id = '" + id + "';", (error, results) => {});
+      }
+    });
   });
   client.on("message", async message => {
     var expmagni = 1;
@@ -2678,19 +2683,30 @@ client.on("ready", async message => {
   dbl.webhook.on('vote', async vote => {
     console.log(`User with ID ${vote.user} just voted!`);
     var id = vote.user;
+    var givebonus = false;
     var user = await client.fetchUser(id);
     if (user === undefined || user === null) {
       return;
     }
+    var bonus = 0;
     connection.query("SELECT * FROM user WHERE id = '" + id + "'", async(error, results) => {
       if (results[0] === undefined || results[0] === null) {
         return;
       }
-      var get = parseInt(results[0]["money"]) + 5;
-      connection.query("UPDATE user SET money = " + get + " WHERE id = '" + id + "';", async(error, results) => {
-        await user.send("🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×5をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)\nあなたの今のクレジット残高:" + get);
+      var nowvote = (results[0]["vote"]+1);
+      if(nowvote % 30 == 0){
+      bonus = 30 * (nowvote / 30);
+      givebonus = true;
+      }
+      var get = parseInt(results[0]["money"]) + 3 + bonus;
+      connection.query("UPDATE user SET vote = "+ nowvote +" , money = " + get + " WHERE id = '" + id + "';", async(error, results) => {
+        if(givebonus){
+        await user.send("🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×3をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)\n🎉今月のvoteの回数が30の倍数になったのでボーナスポイントをゲットしました！🎉\nボーナスポイント数:"+bonus+"\n今月のvote数:"+nowvote+"\nあなたの今のクレジット残高:" + get);
+        }else{
+        await user.send("🌟投票ありがとうございます！🌟\nあなたがvoteしたことを確認しました。\nお礼に課金クレジット×3をプレゼントしました！\n12時間後にまた投票できますのでぜひ投票お願いします。\n(このリワードは投票のたびにもらえます。)\n今月のvote数:"+nowvote+"\nあなたの今のクレジット残高:" + get);
+        }
         var owner = await client.fetchUser("661793849001246721");
-        await owner.send(user.username + "さんがOneWorldOnlineにvoteしてくれました…!\n" + user.username + "さんのクレジット残高:" + get);
+        await owner.send(user.username + "さんがOneWorldOnlineにvoteしてくれました…!\n" + user.username + "さんの今月のvote数:"+nowvote+"\n" + user.username + "さんのクレジット残高:" + get);
       });
     });
   });
@@ -2731,10 +2747,12 @@ client.on("message", async message => {
         return;
       }
       var guilddata = await client.guilds.get(args[0]);
+      /*
       if (guilddata === undefined) {
         return;
       }
-      var channeldata = await guilddata.channels.get(args[1]);
+      */
+      var channeldata = await client.channels.get(args[1]);
       if (channeldata === undefined) {
         return;
       }
@@ -2742,7 +2760,12 @@ client.on("message", async message => {
       if (messagedata === undefined) {
         return;
       }
-      const embed = new discord.RichEmbed().setAuthor(messagedata.author.username, messagedata.author.avatarURL).setColor(0x00ae86).setDescription(messagedata.content + "\n\n\n[message url](" + url + ")").setFooter("Guild:[" + guilddata.name + "] | Channel:[" + channeldata.name + "]", guilddata.iconURL).setTimestamp(messagedata.createdAt);
+      const embed = new discord.RichEmbed().setAuthor(messagedata.author.username, messagedata.author.avatarURL).setColor(0x00ae86).setDescription(messagedata.content + "\n\n\n[message url](" + url + ")").setTimestamp(messagedata.createdAt);
+      if(guilddata!==undefined){
+      embed.setFooter("Guild:[" + guilddata.name + "] | Channel:[" + channeldata.name + "]", guilddata.iconURL)
+      }else{
+      embed.setFooter("Channel:[" + channeldata.name + "]")
+      }
       message.channel.send({
         embed
       });
